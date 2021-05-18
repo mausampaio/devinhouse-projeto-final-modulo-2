@@ -83,6 +83,10 @@ public class ProcessoController {
 	 * delete(@PathVariable Long id) { service.delete(id); }
 	 */
 
+	private Processo toProcesso(ProcessoDTO processoDTO) {
+		return modelMapper.map(processoDTO, Processo.class);
+	}
+
 	private ProcessoDTO toDto(Processo processo) {
 		return modelMapper.map(processo, ProcessoDTO.class);
 	}
