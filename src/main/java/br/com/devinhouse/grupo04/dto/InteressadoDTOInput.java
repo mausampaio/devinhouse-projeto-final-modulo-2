@@ -1,7 +1,6 @@
 package br.com.devinhouse.grupo04.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;

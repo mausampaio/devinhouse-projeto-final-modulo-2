@@ -3,9 +3,7 @@ package br.com.devinhouse.grupo04.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.devinhouse.grupo04.dto.ProcessoDTO;
-import br.com.devinhouse.grupo04.entity.Processo;
 import br.com.devinhouse.grupo04.service.ProcessoService;
 
 @RestController
@@ -26,8 +23,8 @@ public class ProcessoController {
 	@Autowired
 	private ProcessoService service;
 
-	@Autowired
-	private ModelMapper modelMapper;
+	//@Autowired
+	//private ModelMapper modelMapper;
 
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -36,9 +33,9 @@ public class ProcessoController {
 
 		// List<Processo> processos = service.findAll(chaveProcesso);
 
-		List<ProcessoDTO> processos = toDto(service.findAll(chaveProcesso));
+		//List<ProcessoDTO> processos = toDto(service.findAll(chaveProcesso));
 
-		return processos;
+		return null;
 	}
 
 	/*
@@ -77,16 +74,5 @@ public class ProcessoController {
 	 * delete(@PathVariable Long id) { service.delete(id); }
 	 */
 
-	private Processo toProcesso(ProcessoDTO processoDTO) {
-		return modelMapper.map(processoDTO, Processo.class);
-	}
-
-	private ProcessoDTO toDto(Processo processo) {
-		return modelMapper.map(processo, ProcessoDTO.class);
-	}
-
-	private List<ProcessoDTO> toDto(List<Processo> processos) {
-		return processos.stream().map(this::toDto).collect(Collectors.toList());
-	}
 
 }

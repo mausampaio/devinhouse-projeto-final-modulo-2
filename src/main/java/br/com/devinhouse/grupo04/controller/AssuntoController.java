@@ -3,9 +3,7 @@ package br.com.devinhouse.grupo04.controller;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.devinhouse.grupo04.dto.AssuntoDTOInput;
 import br.com.devinhouse.grupo04.dto.AssuntoDTOOutput;
 import br.com.devinhouse.grupo04.entity.Assunto;
+import br.com.devinhouse.grupo04.mapper.AssuntoMapper;
 import br.com.devinhouse.grupo04.service.AssuntoService;
 
 @RestController
@@ -29,7 +28,7 @@ import br.com.devinhouse.grupo04.service.AssuntoService;
 public class AssuntoController {
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private AssuntoMapper assuntoMapper;
 	
 	@Autowired
 	private AssuntoService service;
@@ -40,23 +39,23 @@ public class AssuntoController {
 	public List<AssuntoDTOOutput> findAll() {
 		List<Assunto> assuntos = service.findAll();
 		
-		return toDto(assuntos);
+		return assuntoMapper.toDto(assuntos);
 	}
 	
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public AssuntoDTOOutput create(@RequestBody AssuntoDTOInput assuntoDTO) {
-		Assunto assunto = service.create(toAssunto(assuntoDTO));
+		Assunto assunto = service.create(assuntoMapper.toAssunto(assuntoDTO));
 		
-		return toDto(assunto);
+		return assuntoMapper.toDto(assunto);
 	}
 	
 	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
 	public void update(@PathVariable Long id, @RequestBody AssuntoDTOInput assuntoDTO) {
-		service.update(id, toAssunto(assuntoDTO));
+		service.update(id, assuntoMapper.toAssunto(assuntoDTO));
 	}
 	
 	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
@@ -64,18 +63,6 @@ public class AssuntoController {
 	@ResponseStatus(code = HttpStatus.OK)
 	public void delete(@PathVariable Long id) {
 		service.delete(id);
-	}
-	
-	private Assunto toAssunto(AssuntoDTOInput assuntoDTO) {
-		return modelMapper.map(assuntoDTO, Assunto.class);
-	}
-
-	private AssuntoDTOOutput toDto(Assunto assunto) {
-		return modelMapper.map(assunto, AssuntoDTOOutput.class);
-	}
-
-	private List<AssuntoDTOOutput> toDto(List<Assunto> assuntos) {
-		return assuntos.stream().map(assunto -> toDto(assunto)).collect(Collectors.toList());
 	}
 	
 }
