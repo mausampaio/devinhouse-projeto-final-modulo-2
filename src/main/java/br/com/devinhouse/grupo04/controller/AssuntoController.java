@@ -42,6 +42,13 @@ public class AssuntoController {
 		return assuntoMapper.toDto(assuntos);
 	}
 	
+	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(code = HttpStatus.OK)
+	public Assunto find(@PathVariable Long id) {
+		return service.find(id);
+	}
+	
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)

@@ -20,6 +20,14 @@ public class AssuntoService {
 	public List<Assunto> findAll() {
 		return repository.findAll();
 	}
+	
+	public Assunto find(Long id) {
+		Optional<Assunto> result = repository.findById(id);
+		
+		Assunto assunto = result.orElseThrow();
+		
+		return assunto;
+	}
 
 	public Assunto create(Assunto assunto) {
 		return repository.save(assunto);
