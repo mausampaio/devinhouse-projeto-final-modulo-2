@@ -11,6 +11,7 @@ import br.com.devinhouse.grupo04.entity.Interessado;
 import br.com.devinhouse.grupo04.repository.InteressadoRepository;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
+
 @Service
 public class InteressadoService {
 
@@ -29,7 +30,11 @@ public class InteressadoService {
 		return repository.findAll();
 	}
 
-	public Interessado find(long id) {
+	public Interessado find(Long id) {
+		
+		if(id == null ) {
+			return null;
+		}
 		Optional<Interessado> interessado = repository.findById(id);
 
 		return interessado.orElseThrow();

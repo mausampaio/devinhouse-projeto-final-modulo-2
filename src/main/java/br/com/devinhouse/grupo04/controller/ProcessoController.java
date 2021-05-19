@@ -6,8 +6,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +41,13 @@ public class ProcessoController {
 		return  processoMapper.toDto(service.findAll(chaveProcesso));
 	}
 	
+	@GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(code = HttpStatus.OK)
+	public ProcessoDTOOutput find(@PathVariable Long id) {
+		return processoMapper.toDto(service.find(id));
+	}
+	
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
@@ -45,4 +55,17 @@ public class ProcessoController {
 		return processoMapper.toDto(service.create(processoMapper.toProcesso(processoDTO)));
 	}
 
+	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(code = HttpStatus.OK)
+	public void update(@PathVariable Long id, @RequestBody ProcessoDTOInput processoDTO) {
+		service.update(id, processoMapper.toProcesso(processoDTO));
+	}
+	
+	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+	@ResponseBody
+	@ResponseStatus(code = HttpStatus.OK)
+	public void delete(@PathVariable Long id) {
+		service.delete(id);
+	}
 }

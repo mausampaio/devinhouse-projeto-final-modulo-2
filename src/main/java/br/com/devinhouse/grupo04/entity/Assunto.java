@@ -51,5 +51,4 @@ public class Assunto implements Serializable {
 	public void setFlAtivo(char flAtivo) {
 		this.flAtivo = flAtivo;
 	}
-
 }

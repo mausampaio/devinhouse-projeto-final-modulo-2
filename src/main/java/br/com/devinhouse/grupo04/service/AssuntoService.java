@@ -22,6 +22,9 @@ public class AssuntoService {
 	}
 	
 	public Assunto find(Long id) {
+		if(id == null ) {
+			return null;
+		}
 		Optional<Assunto> result = repository.findById(id);
 		
 		Assunto assunto = result.orElseThrow();
