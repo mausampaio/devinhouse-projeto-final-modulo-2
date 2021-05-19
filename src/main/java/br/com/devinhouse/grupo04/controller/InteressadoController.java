@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,8 +51,8 @@ public class InteressadoController {
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<InteressadoDTOOutput> findAll() {
-		List<Interessado> interessados = service.findAll();
+	public List<InteressadoDTOOutput> findAll(@RequestParam(required = false) String nu_identificacao) {
+		List<Interessado> interessados = service.findAll(nu_identificacao);
 		
 		return toDto(interessados);
 	}
