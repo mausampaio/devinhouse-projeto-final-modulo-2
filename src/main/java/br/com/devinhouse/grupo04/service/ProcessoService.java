@@ -1,6 +1,5 @@
 package br.com.devinhouse.grupo04.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.devinhouse.grupo04.entity.Processo;
 import br.com.devinhouse.grupo04.repository.ProcessoRepository;
+import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
 public class ProcessoService {
@@ -18,52 +18,37 @@ public class ProcessoService {
 	private ProcessoRepository repository;
 
 	public List<Processo> findAll(String chaveProcesso) {
-		List<Processo> processos = new ArrayList<Processo>();
-		Iterable<Processo> result = repository.findAll();
-		
-		result.forEach(processos::add);
-		
+
 		if (chaveProcesso != null) {
-			List<Processo> processosFiltrados = new ArrayList<Processo>();
-			
-			for (Processo processo : processos) {
-				if (chaveProcesso.equals(processo.getChaveProcesso())) {
-					processosFiltrados.add(processo);
-					
-					return processosFiltrados;
-				}
-			}			
+			return repository.findByChaveProcesso(chaveProcesso);
 		}
-		
-		return processos;
+
+		return repository.findAll();
+
 	}
 
 	public Processo find(Long id) {
 		Optional<Processo> result = repository.findById(id);
-		
+
 		return result.orElseThrow();
 	}
-	
+
 	public Processo create(Processo processo) {
 		return repository.save(processo);
 	}
-	
-	public void update(Long id, Processo body) {
+
+	public void update(Long id, Processo processo) {
 		Optional<Processo> result = repository.findById(id);
-		
-		Processo processo = result.orElseThrow();
-		
-		//BeanUtils.copyProperties(body, processo, AtualizaColunasUtil.getNullPropertyNames(body));
-		
-		repository.save(processo);
+
+		Processo novoProcesso = result.orElseThrow();
+
+		BeanUtils.copyProperties(processo, novoProcesso, AtualizaColunasUtil.getNullPropertyNames(processo));
+
+		repository.save(novoProcesso);
 	}
-	
+
 	public void delete(Long id) {
-		Optional<Processo> result = repository.findById(id);
-		
-		Processo processo = result.orElseThrow();
-		
-		repository.delete(processo);
+		repository.deleteById(id);
 	}
 
 }

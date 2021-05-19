@@ -2,40 +2,32 @@ package br.com.devinhouse.grupo04.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-import br.com.devinhouse.grupo04.entity.Assunto;
-import br.com.devinhouse.grupo04.entity.Interessado;
+public class ProcessoDTOInput implements Serializable {
 
-public class ProcessoDTO implements Serializable {
-	
-	private static final long serialVersionUID = 5334377842661430069L;
+	private static final long serialVersionUID = -393417692491112721L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+	@NotNull
 	private Integer nuProcesso;
+	@NotNull
 	private String sgOrgaoSetor;
+	@NotNull
 	private String nuAno;
+	@NotNull
 	private String chaveProcesso;
+	@NotNull
 	private String descricao;
-	private Assunto cdAssunto;
-	private Interessado cdInteressado;
+
+	@NotNull
+	private Long cdAssuntoId;
+
+	@NotNull
+	private Long cdInteressadoId;
+
+	public ProcessoDTOInput() {
+	}
 	
-	public ProcessoDTO() {
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public Integer getNuProcesso() {
 		return nuProcesso;
 	}
@@ -76,20 +68,20 @@ public class ProcessoDTO implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public Assunto getCdAssunto() {
-		return cdAssunto;
+	public Long getCdAssuntoId() {
+		return cdAssuntoId;
 	}
 
-	public void setCdAssunto(Assunto cdAssunto) {
-		this.cdAssunto = cdAssunto;
+	public void setCdAssuntoId(Long cdAssuntoId) {
+		this.cdAssuntoId = cdAssuntoId;
 	}
 
-	public Interessado getCdInteressado() {
-		return cdInteressado;
+	public Long getCdInteressadoId() {
+		return cdInteressadoId;
 	}
 
-	public void setCdInteressado(Interessado cdInteressado) {
-		this.cdInteressado = cdInteressado;
+	public void setCdInteressadoId(Long cdInteressadoId) {
+		this.cdInteressadoId = cdInteressadoId;
 	}
-	
+
 }

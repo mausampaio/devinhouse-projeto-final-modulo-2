@@ -1,6 +1,5 @@
 package br.com.devinhouse.grupo04.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.devinhouse.grupo04.entity.Interessado;
-import br.com.devinhouse.grupo04.entity.Processo;
 import br.com.devinhouse.grupo04.repository.InteressadoRepository;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
