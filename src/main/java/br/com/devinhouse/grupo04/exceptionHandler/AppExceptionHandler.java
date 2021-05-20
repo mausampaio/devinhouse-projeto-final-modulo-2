@@ -16,8 +16,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
+import br.com.devinhouse.grupo04.service.exceptions.InteressadoNotFoundException;
 import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
 import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 
@@ -31,9 +34,27 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return ResponseEntity.status(404).body(validacao);
 	}
-	
+
+	@ExceptionHandler(AssuntoNotFoundException.class)
+	public ResponseEntity<Object> handleAssuntoNotFoundException(AssuntoNotFoundException ex, WebRequest request) {
+
+		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
+
+		return ResponseEntity.status(404).body(validacao);
+	}
+
+	@ExceptionHandler(InteressadoNotFoundException.class)
+	public ResponseEntity<Object> handleInteressadoNotFoundException(InteressadoNotFoundException ex,
+			WebRequest request) {
+
+		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
+
+		return ResponseEntity.status(404).body(validacao);
+	}
+
 	@ExceptionHandler(NuIdentificacaoJaExistenteException.class)
-	public ResponseEntity<Object> handleNuIdentificacaoJaExistenteException(NuIdentificacaoJaExistenteException ex, WebRequest request) {
+	public ResponseEntity<Object> handleNuIdentificacaoJaExistenteException(NuIdentificacaoJaExistenteException ex,
+			WebRequest request) {
 
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
 
@@ -43,6 +64,8 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 	@Autowired
 	private MessageSource messageSource;
 
+	
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -56,9 +79,16 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 				.map(erro -> new Validacao.Campo(((FieldError) erro).getField(),
 						messageSource.getMessage(erro, LocaleContextHolder.getLocale())))
 				.collect(Collectors.toList());
-		
+
 		validacao.setCampos(campos);
-		
+
 		return super.handleExceptionInternal(ex, validacao, headers, status, request);
+	}
+
+	@Override
+	protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+		Validacao validacao = new Validacao(LocalDate.now(), "Endpoint não cadastrado" , 404);
+		return ResponseEntity.status(404).body(validacao);
 	}
 }
