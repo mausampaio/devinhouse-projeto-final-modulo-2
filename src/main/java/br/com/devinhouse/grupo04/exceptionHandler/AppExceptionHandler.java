@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
 import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 
 @ControllerAdvice
@@ -29,6 +30,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
 
 		return ResponseEntity.status(404).body(validacao);
+	}
+	
+	@ExceptionHandler(NuIdentificacaoJaExistenteException.class)
+	public ResponseEntity<Object> handleNuIdentificacaoJaExistenteException(NuIdentificacaoJaExistenteException ex, WebRequest request) {
+
+		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
+
+		return ResponseEntity.status(400).body(validacao);
 	}
 
 	@Autowired

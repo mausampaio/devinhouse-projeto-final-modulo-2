@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.devinhouse.grupo04.entity.Interessado;
 import br.com.devinhouse.grupo04.repository.InteressadoRepository;
 import br.com.devinhouse.grupo04.service.exceptions.InteressadoNotFoundException;
+import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 
@@ -21,12 +22,21 @@ public class InteressadoService {
 
 	public Interessado create(Interessado interessado) {
 		interessado.setNuIdentificacao(interessado.getNuIdentificacao().replaceAll("([^\\d])", ""));
+		
+		Optional<Interessado> result = repository.findByNuIdentificacao(interessado.getNuIdentificacao());
+		
+		result.ifPresent(i -> {
+			if (!i.equals(interessado)) {
+				throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
+			}
+		});
+		
 		return repository.save(interessado);
 	}
 
 	public List<Interessado> findAll(String nuIdentificacao) {
 		if (nuIdentificacao != null) {
-		return repository.findByNuIdentificacao(nuIdentificacao);
+		return repository.findAllByNuIdentificacao(nuIdentificacao);
 		}
 		return repository.findAll();
 	}
