@@ -4,6 +4,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,7 +54,7 @@ public class AssuntoController {
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
 	@ResponseStatus(code = HttpStatus.OK)
-	public AssuntoDTOOutput create(@RequestBody AssuntoDTOInput assuntoDTO) {
+	public AssuntoDTOOutput create(@Valid @RequestBody AssuntoDTOInput assuntoDTO) {
 		Assunto assunto = service.create(assuntoMapper.toAssunto(assuntoDTO));
 		
 		return assuntoMapper.toDto(assunto);

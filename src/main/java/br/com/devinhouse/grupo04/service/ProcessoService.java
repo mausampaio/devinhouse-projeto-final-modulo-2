@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.devinhouse.grupo04.entity.Processo;
 import br.com.devinhouse.grupo04.repository.ProcessoRepository;
+import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
@@ -30,7 +31,7 @@ public class ProcessoService {
 	public Processo find(Long id) {
 		Optional<Processo> result = repository.findById(id);
 
-		return result.orElseThrow();
+		return result.orElseThrow(() -> new ProcessoNotFoundException());
 	}
 
 	public Processo create(Processo processo) {
@@ -40,7 +41,7 @@ public class ProcessoService {
 	public void update(Long id, Processo processo) {
 		Optional<Processo> result = repository.findById(id);
 
-		Processo novoProcesso = result.orElseThrow();
+		Processo novoProcesso = result.orElseThrow(() -> new ProcessoNotFoundException());
 
 		BeanUtils.copyProperties(processo, novoProcesso, AtualizaColunasUtil.getNullPropertyNames(processo));
 

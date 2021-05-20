@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.devinhouse.grupo04.entity.Assunto;
 import br.com.devinhouse.grupo04.repository.AssuntoRepository;
+import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
 @Service
@@ -27,7 +28,7 @@ public class AssuntoService {
 		}
 		Optional<Assunto> result = repository.findById(id);
 		
-		Assunto assunto = result.orElseThrow();
+		Assunto assunto = result.orElseThrow(() -> new AssuntoNotFoundException());
 		
 		return assunto;
 	}
@@ -39,7 +40,7 @@ public class AssuntoService {
 	public void update(Long id, Assunto assunto) {
 		Optional<Assunto> result = repository.findById(id);
 		
-		Assunto novoAssunto = result.orElseThrow();
+		Assunto novoAssunto = result.orElseThrow(() -> new AssuntoNotFoundException());
 		
 		BeanUtils.copyProperties(assunto, novoAssunto, AtualizaColunasUtil.getNullPropertyNames(assunto));
 		
