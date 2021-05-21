@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.devinhouse.grupo04.entity.Processo;
 import br.com.devinhouse.grupo04.repository.ProcessoRepository;
+import br.com.devinhouse.grupo04.service.exceptions.AssuntoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
@@ -20,25 +21,25 @@ public class ProcessoService {
 
 	public List<Processo> findAll(String chaveProcesso, Long cdInteressadoId, Long cdAssuntoId) {
 
-        if (chaveProcesso != null) {
-            return repository.findByChaveProcesso(chaveProcesso);
-        }
+		if (chaveProcesso != null) {
+			return repository.findByChaveProcesso(chaveProcesso);
+		}
 
-        if (cdInteressadoId != null && cdAssuntoId != null) {
-            return repository.findByCdInteressadoIdAndCdAssuntoId(cdInteressadoId, cdAssuntoId);
-        }
+		if (cdInteressadoId != null && cdAssuntoId != null) {
+			return repository.findByCdInteressadoIdAndCdAssuntoId(cdInteressadoId, cdAssuntoId);
+		}
 
-        if (cdInteressadoId != null) {
-            return repository.findByCdInteressadoId(cdInteressadoId);
-        }
+		if (cdInteressadoId != null) {
+			return repository.findByCdInteressadoId(cdInteressadoId);
+		}
 
-        if (cdAssuntoId != null) {
-            return repository.findByCdAssuntoId(cdAssuntoId);
-        }
+		if (cdAssuntoId != null) {
+			return repository.findByCdAssuntoId(cdAssuntoId);
+		}
 
-        return repository.findAll();
+		return repository.findAll();
 
-    }
+	}
 
 	public Processo find(Long id) {
 		Optional<Processo> result = repository.findById(id);
@@ -47,16 +48,26 @@ public class ProcessoService {
 	}
 
 	public Processo create(Processo processo) {
+		char flAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
+		if (flAtivo != 's') {
+			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
+		}
+
 		Processo novoProcesso = repository.save(processo);
-		
+
 		novoProcesso.setNuProcesso(novoProcesso.getId());
-		
-		novoProcesso.setChaveProcesso(novoProcesso.getSgOrgaoSetor() + " " + novoProcesso.getNuProcesso() + "/" + novoProcesso.getNuAno());
-		
+
+		novoProcesso.setChaveProcesso(
+				novoProcesso.getSgOrgaoSetor() + " " + novoProcesso.getNuProcesso() + "/" + novoProcesso.getNuAno());
+
 		return repository.save(novoProcesso);
 	}
 
 	public void update(Long id, Processo processo) {
+		char flAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
+		if (flAtivo != 's') {
+			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
+		}
 		Optional<Processo> result = repository.findById(id);
 
 		Processo novoProcesso = result.orElseThrow(() -> new ProcessoNotFoundException());

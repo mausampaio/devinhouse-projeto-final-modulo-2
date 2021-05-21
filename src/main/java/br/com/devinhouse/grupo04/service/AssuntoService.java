@@ -39,9 +39,9 @@ public class AssuntoService {
 	}
 
 	public void update(Long id, Assunto assunto) {
-		char fl = Character.toLowerCase(assunto.getFlAtivo());
+		char flAtivo = Character.toLowerCase(assunto.getFlAtivo());
 		
-		if ((fl != 's') && (fl != 'n')) {
+		if ((flAtivo != 's') && (flAtivo != 'n')) {
 			throw new AssuntoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
 		}
 
