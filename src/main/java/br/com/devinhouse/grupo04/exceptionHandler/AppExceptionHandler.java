@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.devinhouse.grupo04.service.exceptions.AssuntoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
 import br.com.devinhouse.grupo04.service.exceptions.InteressadoNotFoundException;
 import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
@@ -43,6 +44,14 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.status(404).body(validacao);
 	}
 
+	@ExceptionHandler(AssuntoFlAtivoInvalidException.class)
+	public ResponseEntity<Object> handleAssuntoFlAtivoInvalidException(AssuntoFlAtivoInvalidException ex, WebRequest request){
+		
+		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 400);
+
+		return ResponseEntity.status(400).body(validacao);
+	}
+	
 	@ExceptionHandler(InteressadoNotFoundException.class)
 	public ResponseEntity<Object> handleInteressadoNotFoundException(InteressadoNotFoundException ex,
 			WebRequest request) {

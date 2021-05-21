@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity(name = "assuntos")
 public class Assunto implements Serializable {
 
@@ -16,8 +17,10 @@ public class Assunto implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String descricao;
-	private LocalDate dtCadastro;
+	
+	private LocalDate dtCadastro = LocalDate.now();
 	private char flAtivo;
 
 	public Long getId() {
