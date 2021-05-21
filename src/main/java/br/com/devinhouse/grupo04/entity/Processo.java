@@ -27,8 +27,7 @@ public class Processo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private Integer nuProcesso;
+	private Long nuProcesso;
 	private String sgOrgaoSetor;
 	private String nuAno;
 	private String chaveProcesso;
@@ -53,11 +52,11 @@ public class Processo implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getNuProcesso() {
+	public Long getNuProcesso() {
 		return nuProcesso;
 	}
 
-	public void setNuProcesso(Integer nuProcesso) {
+	public void setNuProcesso(Long nuProcesso) {
 		this.nuProcesso = nuProcesso;
 	}
 

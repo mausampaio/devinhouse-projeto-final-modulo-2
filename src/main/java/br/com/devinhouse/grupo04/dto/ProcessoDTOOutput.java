@@ -11,7 +11,7 @@ public class ProcessoDTOOutput implements Serializable {
 
 	private Long id;
 	
-	private Integer nuProcesso;
+	private Long nuProcesso;
 	private String sgOrgaoSetor;
 	private String nuAno;
 	private String chaveProcesso;
@@ -32,11 +32,11 @@ public class ProcessoDTOOutput implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getNuProcesso() {
+	public Long getNuProcesso() {
 		return nuProcesso;
 	}
 
-	public void setNuProcesso(Integer nuProcesso) {
+	public void setNuProcesso(Long nuProcesso) {
 		this.nuProcesso = nuProcesso;
 	}
 

@@ -35,7 +35,13 @@ public class ProcessoService {
 	}
 
 	public Processo create(Processo processo) {
-		return repository.save(processo);
+		Processo novoProcesso = repository.save(processo);
+		
+		novoProcesso.setNuProcesso(novoProcesso.getId());
+		
+		novoProcesso.setChaveProcesso(novoProcesso.getSgOrgaoSetor() + " " + novoProcesso.getNuProcesso() + "/" + novoProcesso.getNuAno());
+		
+		return repository.save(novoProcesso);
 	}
 
 	public void update(Long id, Processo processo) {

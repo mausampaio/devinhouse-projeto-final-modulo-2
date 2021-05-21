@@ -9,31 +9,17 @@ public class ProcessoDTOInput implements Serializable {
 	private static final long serialVersionUID = -393417692491112721L;
 
 	@NotNull
-	private Integer nuProcesso;
-	@NotNull
 	private String sgOrgaoSetor;
 	@NotNull
 	private String nuAno;
 	@NotNull
-	private String chaveProcesso;
-	@NotNull
 	private String descricao;
-
 	@NotNull
 	private Long cdAssuntoId;
-
 	@NotNull
 	private Long cdInteressadoId;
 
 	public ProcessoDTOInput() {
-	}
-	
-	public Integer getNuProcesso() {
-		return nuProcesso;
-	}
-
-	public void setNuProcesso(Integer nuProcesso) {
-		this.nuProcesso = nuProcesso;
 	}
 
 	public String getSgOrgaoSetor() {
@@ -50,14 +36,6 @@ public class ProcessoDTOInput implements Serializable {
 
 	public void setNuAno(String nuAno) {
 		this.nuAno = nuAno;
-	}
-
-	public String getChaveProcesso() {
-		return chaveProcesso;
-	}
-
-	public void setChaveProcesso(String chaveProcesso) {
-		this.chaveProcesso = chaveProcesso;
 	}
 
 	public String getDescricao() {
