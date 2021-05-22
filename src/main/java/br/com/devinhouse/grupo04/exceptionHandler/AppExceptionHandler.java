@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
+import br.com.devinhouse.grupo04.service.exceptions.InteressadoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.InteressadoNotFoundException;
 import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
 import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
@@ -59,6 +60,15 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
 
 		return ResponseEntity.status(404).body(validacao);
+	}
+	
+
+	@ExceptionHandler(InteressadoFlAtivoInvalidException.class)
+	public ResponseEntity<Object> handleInteressadoFlAtivoInvalidException(InteressadoFlAtivoInvalidException ex, WebRequest request) {
+
+		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 400);
+
+		return ResponseEntity.status(400).body(validacao);
 	}
 
 	@ExceptionHandler(NuIdentificacaoJaExistenteException.class)

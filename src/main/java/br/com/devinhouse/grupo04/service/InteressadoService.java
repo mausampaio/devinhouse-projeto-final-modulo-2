@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.devinhouse.grupo04.entity.Interessado;
 import br.com.devinhouse.grupo04.repository.InteressadoRepository;
+import br.com.devinhouse.grupo04.service.exceptions.InteressadoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.InteressadoNotFoundException;
 import br.com.devinhouse.grupo04.service.exceptions.NuIdentificacaoJaExistenteException;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
-
 
 @Service
 public class InteressadoService {
@@ -21,29 +21,30 @@ public class InteressadoService {
 	private InteressadoRepository repository;
 
 	public Interessado create(Interessado interessado) {
+		
 		interessado.setNuIdentificacao(interessado.getNuIdentificacao().replaceAll("([^\\d])", ""));
-		
+
 		Optional<Interessado> result = repository.findByNuIdentificacao(interessado.getNuIdentificacao());
-		
+
 		result.ifPresent(i -> {
 			if (!i.equals(interessado)) {
 				throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
 			}
 		});
-		
+
 		return repository.save(interessado);
 	}
 
 	public List<Interessado> findAll(String nuIdentificacao) {
 		if (nuIdentificacao != null) {
-		return repository.findAllByNuIdentificacao(nuIdentificacao);
+			return repository.findAllByNuIdentificacao(nuIdentificacao);
 		}
 		return repository.findAll();
 	}
 
 	public Interessado find(Long id) {
-		
-		if(id == null ) {
+
+		if (id == null) {
 			return null;
 		}
 		Optional<Interessado> interessado = repository.findById(id);
@@ -53,6 +54,15 @@ public class InteressadoService {
 	}
 
 	public void update(Long id, Interessado interessado) {
+		char flAtivo = Character.toLowerCase(interessado.getFlAtivo());
+
+		if ((flAtivo != 's') && (flAtivo != 'n')) {
+			throw new InteressadoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
+		}
+
+		interessado.setFlAtivo(Character.toLowerCase(interessado.getFlAtivo()));
+
+		
 		Optional<Interessado> result = repository.findById(id);
 
 		Interessado novoInteressado = result.orElseThrow(() -> new InteressadoNotFoundException());

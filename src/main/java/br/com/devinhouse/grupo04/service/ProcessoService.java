@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import br.com.devinhouse.grupo04.entity.Processo;
 import br.com.devinhouse.grupo04.repository.ProcessoRepository;
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoFlAtivoInvalidException;
+import br.com.devinhouse.grupo04.service.exceptions.InteressadoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.ProcessoNotFoundException;
 import br.com.devinhouse.grupo04.util.AtualizaColunasUtil;
 
@@ -48,9 +49,14 @@ public class ProcessoService {
 	}
 
 	public Processo create(Processo processo) {
-		char flAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
-		if (flAtivo != 's') {
+		char assuntoFlAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
+		char interessadoFlAtivo = Character.toLowerCase(processo.getCdInteressado().getFlAtivo());
+		
+		if (assuntoFlAtivo != 's') {
 			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
+		}
+		if ( interessadoFlAtivo != 's') {
+			throw new InteressadoFlAtivoInvalidException("O Interessado deve estar ativo");
 		}
 
 		Processo novoProcesso = repository.save(processo);
