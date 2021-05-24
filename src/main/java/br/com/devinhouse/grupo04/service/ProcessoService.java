@@ -23,19 +23,19 @@ public class ProcessoService {
 	public List<Processo> findAll(String chaveProcesso, Long cdInteressadoId, Long cdAssuntoId) {
 
 		if (chaveProcesso != null) {
-			return repository.findByChaveProcesso(chaveProcesso);
+			return repository.findAllByChaveProcesso(chaveProcesso);
 		}
 
 		if (cdInteressadoId != null && cdAssuntoId != null) {
-			return repository.findByCdInteressadoIdAndCdAssuntoId(cdInteressadoId, cdAssuntoId);
+			return repository.findAllByCdInteressadoIdAndCdAssuntoId(cdInteressadoId, cdAssuntoId);
 		}
 
 		if (cdInteressadoId != null) {
-			return repository.findByCdInteressadoId(cdInteressadoId);
+			return repository.findAllByCdInteressadoId(cdInteressadoId);
 		}
 
 		if (cdAssuntoId != null) {
-			return repository.findByCdAssuntoId(cdAssuntoId);
+			return repository.findAllByCdAssuntoId(cdAssuntoId);
 		}
 
 		return repository.findAll();

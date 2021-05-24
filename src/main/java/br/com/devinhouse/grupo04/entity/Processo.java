@@ -67,6 +67,17 @@ public class Processo implements Serializable {
 	
 	public Processo() {
 	}
+	
+	
+
+	public Processo(String sgOrgaoSetor, String nuAno, String descricao,
+			Assunto cdAssunto, Interessado cdInteressado) {
+		this.sgOrgaoSetor = sgOrgaoSetor;
+		this.nuAno = nuAno;
+		this.descricao = descricao;
+		this.cdAssunto = cdAssunto;
+		this.cdInteressado = cdInteressado;
+	}
 
 	public Long getId() {
 		return id;

@@ -26,7 +26,13 @@ public class Assunto implements Serializable {
 	private LocalDate dtCadastro = LocalDate.now();
 	
 	@Column(nullable = false, length = 1)
-	private char flAtivo;
+	private char flAtivo = 's';
+	
+	
+
+	public Assunto(String descricao) {
+		this.descricao = descricao;
+	}
 
 	public Long getId() {
 		return id;
