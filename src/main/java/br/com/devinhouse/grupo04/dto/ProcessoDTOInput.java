@@ -3,19 +3,27 @@ package br.com.devinhouse.grupo04.dto;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class ProcessoDTOInput implements Serializable {
 
 	private static final long serialVersionUID = -393417692491112721L;
 
 	@NotNull
+	@Size(min = 1, max = 4)
 	private String sgOrgaoSetor;
+	
 	@NotNull
+	@Size(min = 1, max = 4)
 	private String nuAno;
+	
 	@NotNull
+	@Size(min = 1, max = 250)
 	private String descricao;
+	
 	@NotNull
 	private Long cdAssuntoId;
+	
 	@NotNull
 	private Long cdInteressadoId;
 

@@ -3,6 +3,7 @@ package br.com.devinhouse.grupo04.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,9 +24,17 @@ public class Interessado implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false, length = 250)
 	private String nmInteressado;
+	
+	@Column(nullable = false, length = 50)
 	private String nuIdentificacao;
+	
+	@Column(nullable = false)
 	private LocalDate dtNascimento;
+	
+	@Column(nullable = false, length = 1)
 	private char flAtivo;
 
 	public Long getId() {

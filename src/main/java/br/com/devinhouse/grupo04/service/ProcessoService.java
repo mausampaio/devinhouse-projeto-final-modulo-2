@@ -55,25 +55,21 @@ public class ProcessoService {
 		if (assuntoFlAtivo != 's') {
 			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
 		}
+		
 		if ( interessadoFlAtivo != 's') {
 			throw new InteressadoFlAtivoInvalidException("O Interessado deve estar ativo");
 		}
-
-		Processo novoProcesso = repository.save(processo);
-
-		novoProcesso.setNuProcesso(novoProcesso.getId());
-
-		novoProcesso.setChaveProcesso(
-				novoProcesso.getSgOrgaoSetor() + " " + novoProcesso.getNuProcesso() + "/" + novoProcesso.getNuAno());
-
-		return repository.save(novoProcesso);
+		
+		return repository.save(processo);
 	}
 
 	public void update(Long id, Processo processo) {
 		char flAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
+		
 		if (flAtivo != 's') {
 			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
 		}
+		
 		Optional<Processo> result = repository.findById(id);
 
 		Processo novoProcesso = result.orElseThrow(() -> new ProcessoNotFoundException());

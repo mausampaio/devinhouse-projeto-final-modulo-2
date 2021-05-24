@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -12,14 +13,19 @@ public class InteressadoDTOInput implements Serializable {
 	private static final long serialVersionUID = 3007548449472824966L;
 
 	@NotNull
+	@Size(min = 1, max = 250)
 	private String nmInteressado;
+	
 	@NotNull
 	@CPF
 	private String nuIdentificacao;
+	
 	@Pattern(regexp = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(\\/|-|\\.)(?:0?[13-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$",
 			message = "Data precisa seguir o padrão dd/MM/yyyy")
 	@NotNull
 	private String dtNascimento;
+	
+	@Size(min = 1, max = 1)
 	private char flAtivo = 's';
 
 	public String getNmInteressado() {

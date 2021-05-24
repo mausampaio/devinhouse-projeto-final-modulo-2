@@ -2,17 +2,17 @@ package br.com.devinhouse.grupo04.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PostPersist;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity(name = "processos")
 @Table(
@@ -27,19 +27,43 @@ public class Processo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
 	private Long nuProcesso;
+	
+	@Column(nullable = false, length = 4)
 	private String sgOrgaoSetor;
+	
+	@Column(nullable = false, length = 4)
 	private String nuAno;
+	
+	@Column(nullable = false, length = 50)
 	private String chaveProcesso;
+	
+	@Column(nullable = false)
 	private String descricao;
-	@ManyToOne
+	
+	@ManyToOne(optional = false)
   @JoinColumn(name = "cd_assunto_id", nullable = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
 	private Assunto cdAssunto;
-	@ManyToOne
+	
+	@ManyToOne(optional = false)
   @JoinColumn(name = "cd_interessado_id", nullable = false)
-  @OnDelete(action = OnDeleteAction.CASCADE)
 	private Interessado cdInteressado;
+	
+	@PrePersist
+  public void validaCamposAutoGerados() {
+      if (nuProcesso == null) {
+          nuProcesso = 0L;
+      }
+      chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+  }
+
+  @PostPersist
+  public void geraVaLoresCamposAutoGerados() {
+      nuProcesso = this.id;
+      chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+  }
 	
 	public Processo() {
 	}
