@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,33 +19,32 @@ class ProcessoRepositoryTest {
 
 	@Autowired
 	private ProcessoRepository repositoryTestProcesso;
+
 	@Autowired
 	private InteressadoRepository repositoryTestInteressado;
+
 	@Autowired
 	private AssuntoRepository repositoryTestAssunto;
 
-	@BeforeEach
-	private void createEntities() {
-		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
-		Interessado novoIinteressado = repositoryTestInteressado.save(interessado);
-		System.out.println(novoIinteressado.getId());
-		Assunto assunto = new Assunto("construção civil");
-		Assunto novoAssunto = repositoryTestAssunto.save(assunto);
-		System.out.println(novoAssunto.getId());
-
-		Processo processo = new Processo("soft", "2021", "implementar", novoAssunto, novoIinteressado);
-		repositoryTestProcesso.save(processo);		
-	}
 	@AfterEach
 	private void deleteAll() {
-		System.out.println("oiii");
 		repositoryTestProcesso.deleteAll();
 		repositoryTestInteressado.deleteAll();
 		repositoryTestAssunto.deleteAll();
-		}
+	}
+
 	@Test
 	void testFindAllByChaveProcesso() {
-		
+		// given
+		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
+		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
+
+		Assunto assunto = new Assunto("construção civil");
+		Assunto novoAssunto = repositoryTestAssunto.save(assunto);
+
+		Processo processo = new Processo("soft", "2021", "implementar", novoAssunto, novoInteressado);
+		repositoryTestProcesso.save(processo);
+
 		// when
 		List<Processo> processos = repositoryTestProcesso.findAllByChaveProcesso("soft 1/2021");
 
@@ -54,12 +52,20 @@ class ProcessoRepositoryTest {
 		assertThat(processos).asList().size().isEqualTo(1);
 	}
 
-	
 	@Test
 	void testFindAllByCdInteressadoIdAndCdAssuntoId() {
-		
+		// given
+		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
+		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
+
+		Assunto assunto = new Assunto("construção civil");
+		Assunto novoAssunto = repositoryTestAssunto.save(assunto);
+
+		Processo processo = new Processo("soft", "2021", "implementar", novoAssunto, novoInteressado);
+		repositoryTestProcesso.save(processo);
+
 		// when
-		List<Processo> processos = repositoryTestProcesso.findAllByCdInteressadoIdAndCdAssuntoId(2L, 2L);
+		List<Processo> processos = repositoryTestProcesso.findAllByCdInteressadoIdAndCdAssuntoId(novoInteressado.getId(), novoAssunto.getId());
 
 		// then
 		assertThat(processos).asList().size().isEqualTo(1);
@@ -67,16 +73,38 @@ class ProcessoRepositoryTest {
 
 	@Test
 	void testFindAllByCdAssuntoId() {
-	// when
-	List<Processo> processos = repositoryTestProcesso.findAllByCdAssuntoId(3L);
-	// then
-	assertThat(processos).asList().size().isEqualTo(1);
+		// given
+		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
+		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
+
+		Assunto assunto = new Assunto("construção civil");
+		Assunto novoAssunto = repositoryTestAssunto.save(assunto);
+
+		Processo processo = new Processo("soft", "2021", "implementar", novoAssunto, novoInteressado);
+		repositoryTestProcesso.save(processo);
+
+		// when
+		List<Processo> processos = repositoryTestProcesso.findAllByCdAssuntoId(novoAssunto.getId());
+
+		// then
+		assertThat(processos).asList().size().isEqualTo(1);
 	}
 
 	@Test
 	void testFindAllByCdInteressadoId() {
+		// given
+		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
+		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
+
+		Assunto assunto = new Assunto("construção civil");
+		Assunto novoAssunto = repositoryTestAssunto.save(assunto);
+
+		Processo processo = new Processo("soft", "2021", "implementar", novoAssunto, novoInteressado);
+		repositoryTestProcesso.save(processo);
+
 		// when
-		List<Processo> processos = repositoryTestProcesso.findAllByCdInteressadoId(4L);
+		List<Processo> processos = repositoryTestProcesso.findAllByCdInteressadoId(novoInteressado.getId());
+
 		// then
 		assertThat(processos).asList().size().isEqualTo(1);
 	}

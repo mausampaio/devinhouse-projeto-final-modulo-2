@@ -15,63 +15,56 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity(name = "processos")
-@Table(
-    name="PROCESSOS", 
-    uniqueConstraints=
-        @UniqueConstraint(columnNames={"chaveProcesso", "nuProcesso"})
-)
+@Table(name = "PROCESSOS", uniqueConstraints = @UniqueConstraint(columnNames = { "chaveProcesso", "nuProcesso" }))
 public class Processo implements Serializable {
-	
+
 	private static final long serialVersionUID = 3446200032394564533L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Long nuProcesso;
-	
+
 	@Column(nullable = false, length = 4)
 	private String sgOrgaoSetor;
-	
+
 	@Column(nullable = false, length = 4)
 	private String nuAno;
-	
+
 	@Column(nullable = false, length = 50)
 	private String chaveProcesso;
-	
+
 	@Column(nullable = false)
 	private String descricao;
-	
-	@ManyToOne(optional = false)
-  @JoinColumn(name = "cd_assunto_id", nullable = false)
-	private Assunto cdAssunto;
-	
-	@ManyToOne(optional = false)
-  @JoinColumn(name = "cd_interessado_id", nullable = false)
-	private Interessado cdInteressado;
-	
-	@PrePersist
-  public void validaCamposAutoGerados() {
-      if (nuProcesso == null) {
-          nuProcesso = 0L;
-      }
-      chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
-  }
 
-  @PostPersist
-  public void geraVaLoresCamposAutoGerados() {
-      nuProcesso = this.id;
-      chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
-  }
-	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "cd_assunto_id", nullable = false)
+	private Assunto cdAssunto;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "cd_interessado_id", nullable = false)
+	private Interessado cdInteressado;
+
+	@PrePersist
+	public void validaCamposAutoGerados() {
+		if (nuProcesso == null) {
+			nuProcesso = 0L;
+		}
+		chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+	}
+
+	@PostPersist
+	public void geraVaLoresCamposAutoGerados() {
+		nuProcesso = this.id;
+		chaveProcesso = String.format("%s %d/%s", this.sgOrgaoSetor, this.nuProcesso, this.nuAno);
+	}
+
 	public Processo() {
 	}
-	
-	
 
-	public Processo(String sgOrgaoSetor, String nuAno, String descricao,
-			Assunto cdAssunto, Interessado cdInteressado) {
+	public Processo(String sgOrgaoSetor, String nuAno, String descricao, Assunto cdAssunto, Interessado cdInteressado) {
 		this.sgOrgaoSetor = sgOrgaoSetor;
 		this.nuAno = nuAno;
 		this.descricao = descricao;
@@ -82,6 +75,7 @@ public class Processo implements Serializable {
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -141,5 +135,5 @@ public class Processo implements Serializable {
 	public void setCdInteressado(Interessado cdInteressado) {
 		this.cdInteressado = cdInteressado;
 	}
-	
+
 }

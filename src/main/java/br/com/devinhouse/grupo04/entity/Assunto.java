@@ -28,7 +28,8 @@ public class Assunto implements Serializable {
 	@Column(nullable = false, length = 1)
 	private char flAtivo = 's';
 	
-	
+	public Assunto() {
+	}
 
 	public Assunto(String descricao) {
 		this.descricao = descricao;

@@ -37,6 +37,9 @@ public class Interessado implements Serializable {
 	@Column(nullable = false, length = 1)
 	private char flAtivo = 's';
 	
+	public Interessado() {
+	}
+	
 	public Interessado(String nmInteressado, String nuIdentificacao, LocalDate dtNascimento) {
 		this.nmInteressado = nmInteressado;
 		this.nuIdentificacao = nuIdentificacao;
