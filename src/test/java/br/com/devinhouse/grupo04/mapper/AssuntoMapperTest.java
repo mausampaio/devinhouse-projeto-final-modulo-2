@@ -20,7 +20,7 @@ class AssuntoMapperTest {
 	private AssuntoMapper assuntoMapper;
 
 	@Test
-	void testToAssunto() {
+	void deveMapearUmAssuntoDtoParaAssunto() {
 		// given
 		AssuntoDTOInput assuntoDto = new AssuntoDTOInput("descricao DTO");
 
@@ -50,7 +50,7 @@ class AssuntoMapperTest {
 	}
 
 	@Test
-	void testToDtoListOfAssunto() {
+	void deveMapearUmaListaAssuntoDtoParaAssunto() {
 		// given
 		List<Assunto> assuntos = new ArrayList<Assunto>();
 		Assunto assunto = new Assunto("descricao");
@@ -58,11 +58,11 @@ class AssuntoMapperTest {
 		
 		assuntos.add(assunto);
 		// when
-		List<AssuntoDTOOutput> assuntoDto = assuntoMapper.toDto(assuntos);
+		List<AssuntoDTOOutput> assuntosDto = assuntoMapper.toDto(assuntos);
 
 		// then
-		assertThat(assuntoDto).isNotNull();
-		assertThat(assuntoDto).hasSize(1);
+		assertThat(assuntosDto).isNotNull();
+		assertThat(assuntosDto).hasSize(1);
 	}
 
 }
