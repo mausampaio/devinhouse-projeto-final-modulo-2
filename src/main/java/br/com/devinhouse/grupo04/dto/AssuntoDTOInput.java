@@ -14,6 +14,13 @@ public class AssuntoDTOInput implements Serializable {
 	private String descricao;
 	
 	private char flAtivo = 's';
+	
+	public AssuntoDTOInput() {
+	}
+
+	public AssuntoDTOInput(@NotNull @Size(min = 1, max = 250) String descricao) {
+		this.descricao = descricao;
+	}
 
 	public String getDescricao() {
 		return descricao;
