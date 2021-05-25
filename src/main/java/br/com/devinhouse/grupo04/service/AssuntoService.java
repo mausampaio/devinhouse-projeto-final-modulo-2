@@ -27,9 +27,7 @@ public class AssuntoService {
 		if (id == null) {
 			return null;
 		}
-		Optional<Assunto> result = repository.findById(id);
-
-		Assunto assunto = result.orElseThrow(() -> new AssuntoNotFoundException());
+		Assunto assunto = getAssunto(id);
 
 		return assunto;
 	}
@@ -40,16 +38,14 @@ public class AssuntoService {
 
 	public void update(Long id, Assunto assunto) {
 		char flAtivo = Character.toLowerCase(assunto.getFlAtivo());
-		
+
 		if ((flAtivo != 's') && (flAtivo != 'n')) {
 			throw new AssuntoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
 		}
 
 		assunto.setFlAtivo(Character.toLowerCase(assunto.getFlAtivo()));
 
-		Optional<Assunto> result = repository.findById(id);
-
-		Assunto novoAssunto = result.orElseThrow(() -> new AssuntoNotFoundException());
+		Assunto novoAssunto = getAssunto(id);
 
 		BeanUtils.copyProperties(assunto, novoAssunto, AtualizaColunasUtil.getNullPropertyNames(assunto));
 
@@ -59,6 +55,13 @@ public class AssuntoService {
 
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+
+	private Assunto getAssunto(Long id) {
+		Optional<Assunto> result = repository.findById(id);
+
+		Assunto assunto = result.orElseThrow(() -> new AssuntoNotFoundException());
+		return assunto;
 	}
 
 }
