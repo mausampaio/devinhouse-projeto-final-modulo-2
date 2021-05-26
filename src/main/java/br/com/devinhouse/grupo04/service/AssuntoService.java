@@ -27,7 +27,7 @@ public class AssuntoService {
 		if (id == null) {
 			return null;
 		}
-		Assunto assunto = getAssunto(id);
+		Assunto assunto = recuperaAssunto(id);
 
 		return assunto;
 	}
@@ -45,7 +45,7 @@ public class AssuntoService {
 
 		assunto.setFlAtivo(Character.toLowerCase(assunto.getFlAtivo()));
 
-		Assunto novoAssunto = getAssunto(id);
+		Assunto novoAssunto = recuperaAssunto(id);
 
 		BeanUtils.copyProperties(assunto, novoAssunto, AtualizaColunasUtil.getNullPropertyNames(assunto));
 
@@ -57,7 +57,7 @@ public class AssuntoService {
 		repository.deleteById(id);
 	}
 
-	private Assunto getAssunto(Long id) {
+	private Assunto recuperaAssunto(Long id) {
 		Optional<Assunto> result = repository.findById(id);
 
 		Assunto assunto = result.orElseThrow(() -> new AssuntoNotFoundException());

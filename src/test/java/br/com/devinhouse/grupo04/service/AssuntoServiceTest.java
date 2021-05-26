@@ -69,7 +69,7 @@ class AssuntoServiceTest {
 	@Test
 	void DeveCriarUmAssunto() {
 		// given
-		Assunto assunto = new Assunto("descrição");
+		Assunto assunto = new Assunto("descrição"); 
 		assunto.setId(1L);
 
 		// when
@@ -89,7 +89,7 @@ class AssuntoServiceTest {
 	void DeveAtualizarUmAssunto() {
 		// given
 		Assunto assunto = new Assunto("descrição");
-		assunto.setId(1L);
+		assunto.setId(1L); 
 		when(assuntoRepository.findById(1L)).thenReturn(Optional.of(assunto));
 
 		// when
