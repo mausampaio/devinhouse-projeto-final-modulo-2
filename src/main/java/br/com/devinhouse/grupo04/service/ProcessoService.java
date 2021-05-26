@@ -49,32 +49,18 @@ public class ProcessoService {
 	}
 
 	public Processo create(Processo processo) {
-		char assuntoFlAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
-		char interessadoFlAtivo = Character.toLowerCase(processo.getCdInteressado().getFlAtivo());
-		
-		if (assuntoFlAtivo != 's') {
-			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
-		}
-		
-		if ( interessadoFlAtivo != 's') {
-			throw new InteressadoFlAtivoInvalidException("O Interessado deve estar ativo");
-		}
-		
+		verificaFlAtivoInteressadoAssunto(processo);
+
 		return repository.save(processo);
 	}
 
-	public void update(Long id, Processo processo) {
-		char flAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
-		
-		if (flAtivo != 's') {
-			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
-		}
-		
-		Optional<Processo> result = repository.findById(id);
 
-		Processo novoProcesso = result.orElseThrow(() -> new ProcessoNotFoundException());
+	public void update(Long id, Processo processo) {
+		Processo novoProcesso = find(id);
 
 		BeanUtils.copyProperties(processo, novoProcesso, AtualizaColunasUtil.getNullPropertyNames(processo));
+
+		verificaFlAtivoInteressadoAssunto(novoProcesso);
 
 		repository.save(novoProcesso);
 	}
@@ -83,4 +69,17 @@ public class ProcessoService {
 		repository.deleteById(id);
 	}
 
+	private void verificaFlAtivoInteressadoAssunto(Processo processo) {
+		char assuntoFlAtivo = Character.toLowerCase(processo.getCdAssunto().getFlAtivo());
+		char interessadoFlAtivo = Character.toLowerCase(processo.getCdInteressado().getFlAtivo());
+		
+		if (assuntoFlAtivo != 's') {
+			throw new AssuntoFlAtivoInvalidException("O Assunto deve estar ativo");
+		}
+		
+		if (interessadoFlAtivo != 's') {
+			throw new InteressadoFlAtivoInvalidException("O Interessado deve estar ativo");
+		}
+	}
+	
 }

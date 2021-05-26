@@ -46,10 +46,7 @@ class InteressadoServiceTest {
 		Interessado interessadoCapturado = interessadoArgumentoCapturado.getValue();
 
 		assertThat(interessadoCapturado).isEqualTo(interessado);
-		;
 	}
-	
-	
 
 	@Test
 	void deveRetornarNullnoIdNull() {
@@ -59,10 +56,9 @@ class InteressadoServiceTest {
 
 		// then
 		assertThat(serviceInteressado).isEqualTo(null);
-	
+
 	}
-	
-	
+
 	@Test
 	void deveRetornarListaInteressadoPorCpf() {
 		// when
@@ -70,7 +66,7 @@ class InteressadoServiceTest {
 		// then
 		verify(interessadoRepository).findAllByNuIdentificacao("30733668062");
 	}
-	
+
 	@Test
 	void deveRetornarTodosOsInteressados() {
 		// when
@@ -78,14 +74,13 @@ class InteressadoServiceTest {
 		// then
 		verify(interessadoRepository).findAll();
 	}
-	
-	
+
 	@Test
 	void deveRetornarInteressadoBaseadoNoId() {
 		// given
 		Interessado interessado = new Interessado("Joao Silva", "06893346050", LocalDate.of(1986, 2, 1));
 		interessado.setId(1L);
-		
+
 		// when
 		when(interessadoRepository.findById(1L)).thenReturn(Optional.of(interessado));
 		Interessado serviceInteressado = interessadoService.find(1L);
@@ -93,34 +88,35 @@ class InteressadoServiceTest {
 		// then
 		assertThat(serviceInteressado.getId()).isEqualTo(interessado.getId());
 	}
-	
-	
+
 	@Test
 	void deveRetornarExceptionCasoNenhumInteressadoEncontrado() {
 		assertThatThrownBy(() -> interessadoService.find(1L)).isInstanceOf(InteressadoNotFoundException.class);
 	}
-	
+
 	@Test
 	void deveRetornarExceptionCasoNuIdentificacaoJaExistente() {
-		//given
+		// given
 		Interessado interessado = new Interessado("Joao Silva", "26923170095", LocalDate.of(1986, 2, 1));
 		interessado.setId(1L);
 		Interessado interessadoCpfIgual = new Interessado("Joao Silva", "26923170095", LocalDate.of(1986, 2, 1));
 		interessado.setId(1L);
-		//when		
+		// when
 		when(interessadoRepository.findByNuIdentificacao("26923170095")).thenReturn(Optional.of(interessado));
-		
-		//then
-		assertThatThrownBy(() -> interessadoService.create(interessadoCpfIgual)).isInstanceOf(NuIdentificacaoJaExistenteException.class);
-	} 
-	
+
+		// then
+		assertThatThrownBy(() -> interessadoService.create(interessadoCpfIgual))
+				.isInstanceOf(NuIdentificacaoJaExistenteException.class);
+	}
+
 	@Test
 	void deveRetornarExceptionCasoFlAtivoSejaDiferenteDeSOuN() {
 		Interessado interessado = new Interessado("Joao Silva", "06893346050", LocalDate.of(1986, 2, 1));
 		interessado.setId(1L);
 		interessado.setFlAtivo('V');
-			
-		assertThatThrownBy(() -> interessadoService.update(1L, interessado)).isInstanceOf(InteressadoFlAtivoInvalidException.class);
+
+		assertThatThrownBy(() -> interessadoService.update(1L, interessado))
+				.isInstanceOf(InteressadoFlAtivoInvalidException.class);
 	}
 
 	@Test
@@ -152,7 +148,7 @@ class InteressadoServiceTest {
 	void deveExcluirUmInteressadoPorId() {
 		// when
 		interessadoService.delete(1L);
-		//	 then
+		// then
 		verify(interessadoRepository).deleteById(1L);
 	}
 

@@ -84,10 +84,6 @@ public class Processo implements Serializable {
 		return nuProcesso;
 	}
 
-	public void setNuProcesso(Long nuProcesso) {
-		this.nuProcesso = nuProcesso;
-	}
-
 	public String getSgOrgaoSetor() {
 		return sgOrgaoSetor;
 	}
@@ -106,10 +102,6 @@ public class Processo implements Serializable {
 
 	public String getChaveProcesso() {
 		return chaveProcesso;
-	}
-
-	public void setChaveProcesso(String chaveProcesso) {
-		this.chaveProcesso = chaveProcesso;
 	}
 
 	public String getDescricao() {

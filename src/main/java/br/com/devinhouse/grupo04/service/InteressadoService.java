@@ -21,7 +21,7 @@ public class InteressadoService {
 	private InteressadoRepository repository;
 
 	public Interessado create(Interessado interessado) {
-		
+
 		interessado.setNuIdentificacao(interessado.getNuIdentificacao().replaceAll("([^\\d])", ""));
 
 		Optional<Interessado> result = repository.findByNuIdentificacao(interessado.getNuIdentificacao());
@@ -29,7 +29,7 @@ public class InteressadoService {
 		result.ifPresent(i -> {
 			if (!i.equals(interessado)) {
 				throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
-			} 
+			}
 		});
 
 		return repository.save(interessado);
@@ -47,7 +47,7 @@ public class InteressadoService {
 		if (id == null) {
 			return null;
 		}
-		
+
 		return recuperaInteressado(id);
 
 	}
@@ -55,13 +55,12 @@ public class InteressadoService {
 	public void update(Long id, Interessado interessado) {
 		char flAtivo = Character.toLowerCase(interessado.getFlAtivo());
 
-		if ((flAtivo != 's') && (flAtivo != 'n')) { 
+		if ((flAtivo != 's') && (flAtivo != 'n')) {
 			throw new InteressadoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
 		}
 
 		interessado.setFlAtivo(Character.toLowerCase(interessado.getFlAtivo()));
 
-		
 		Interessado novoInteressado = recuperaInteressado(id);
 
 		BeanUtils.copyProperties(interessado, novoInteressado, AtualizaColunasUtil.getNullPropertyNames(interessado));
@@ -70,16 +69,15 @@ public class InteressadoService {
 
 	}
 
-
 	public void delete(Long id) {
-		repository.deleteById(id); 
+		repository.deleteById(id);
 
 	}
-	
+
 	private Interessado recuperaInteressado(Long id) {
-		
+
 		Optional<Interessado> result = repository.findById(id);
-		
+
 		Interessado novoInteressado = result.orElseThrow(() -> new InteressadoNotFoundException());
 		return novoInteressado;
 	}
