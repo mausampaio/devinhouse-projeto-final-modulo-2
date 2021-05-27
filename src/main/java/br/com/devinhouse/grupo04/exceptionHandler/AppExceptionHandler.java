@@ -75,7 +75,7 @@ public class AppExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleNuIdentificacaoJaExistenteException(NuIdentificacaoJaExistenteException ex,
 			WebRequest request) {
 
-		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 404);
+		Validacao validacao = new Validacao(LocalDate.now(), ex.getMessage(), 400);
 
 		return ResponseEntity.status(400).body(validacao);
 	}
