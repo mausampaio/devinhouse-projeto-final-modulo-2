@@ -15,6 +15,22 @@ public class AssuntoDTOOutput implements Serializable {
 	private LocalDate dtCadastro;
 	private char flAtivo;
 
+	public AssuntoDTOOutput() {
+	}
+
+	
+	
+	public AssuntoDTOOutput(Long id, String descricao, LocalDate dtCadastro, char flAtivo) {
+		this.id = id;
+		this.descricao = descricao;
+		this.dtCadastro = dtCadastro;
+		this.flAtivo = flAtivo;
+	}
+
+	public AssuntoDTOOutput(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public Long getId() {
 		return id;
 	}
