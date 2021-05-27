@@ -26,6 +26,7 @@ import br.com.devinhouse.grupo04.dto.AssuntoDTOOutput;
 import br.com.devinhouse.grupo04.entity.Assunto;
 import br.com.devinhouse.grupo04.mapper.AssuntoMapper;
 import br.com.devinhouse.grupo04.service.AssuntoService;
+import br.com.devinhouse.grupo04.service.exceptions.AssuntoFlAtivoInvalidException;
 import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
 
 @WebMvcTest(value = AssuntoController.class)
@@ -110,6 +111,29 @@ class AssuntoControllerTest {
 	}
 
 	@Test
+	void deveRetornarStatus400QuandoFlAtivoDiferenteDeSOuN() throws Exception {
+		// given
+		AssuntoFlAtivoInvalidException exception = new AssuntoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
+		
+		AssuntoDTOInput inputDTO = new AssuntoDTOInput("descricao");
+		inputDTO.setFlAtivo('V');
+
+		given(assuntoMapper.toAssunto(any(AssuntoDTOInput.class))).willThrow(exception);
+
+		// when
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/v1/assuntos/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(inputDTO));
+
+		// then
+		mvc.perform(request)
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.mensagem").value("O flAtivo deve ser 's' ou 'n'"))
+			.andExpect(jsonPath("$.statusCode").value("400"))
+		;
+	}
+
+	@Test
 	void deveCriarUmAssunto() throws Exception {
 		// given
 		AssuntoDTOOutput assuntoDto = new AssuntoDTOOutput(1L, "descricao", LocalDate.now(), 's');
@@ -122,7 +146,8 @@ class AssuntoControllerTest {
 		// when
 		when(assuntoService.create(any(Assunto.class))).thenReturn(assunto);
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/v1/assuntos")
-				.contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(inputDTO));
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(inputDTO));
 
 		// then
 		mvc.perform(request)
@@ -142,7 +167,8 @@ class AssuntoControllerTest {
 
 		// when
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/v1/assuntos/1")
-				.contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(inputDTO));
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(inputDTO));
 
 		// then
 		mvc.perform(request)
