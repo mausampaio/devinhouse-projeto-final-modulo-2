@@ -2,6 +2,7 @@ package br.com.devinhouse.grupo04.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -9,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +34,21 @@ import br.com.devinhouse.grupo04.service.exceptions.AssuntoNotFoundException;
 @WebMvcTest(value = AssuntoController.class)
 class AssuntoControllerTest {
 
-	@MockBean
-	private AssuntoService assuntoService;
 
 	@Autowired
 	private MockMvc mvc;
 
+	@Autowired
+	private ObjectMapper objectMapper;
+	
+	@MockBean
+	private AssuntoService assuntoService;
+	
 	@MockBean
 	private AssuntoMapper assuntoMapper;
 
 	@Mock
 	private Assunto assunto;
-
-	@Autowired
-	private ObjectMapper objectMapper;
 
 	@Test
 	void deveRetornarTodosOsAssuntos() throws Exception {
@@ -115,10 +118,11 @@ class AssuntoControllerTest {
 		// given
 		AssuntoFlAtivoInvalidException exception = new AssuntoFlAtivoInvalidException("O flAtivo deve ser 's' ou 'n'");
 		
-		AssuntoDTOInput inputDTO = new AssuntoDTOInput("descricao");
-		inputDTO.setFlAtivo('V');
-
-		given(assuntoMapper.toAssunto(any(AssuntoDTOInput.class))).willThrow(exception);
+		AssuntoDTOInput inputDTO = new AssuntoDTOInput();
+		
+		given(assuntoMapper.toAssunto(any(AssuntoDTOInput.class))).willReturn(assunto);
+		
+		doThrow(exception).when(assuntoService).update(1L, assunto);
 
 		// when
 		MockHttpServletRequestBuilder request = MockMvcRequestBuilders.put("/v1/assuntos/1")
