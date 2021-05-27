@@ -24,6 +24,18 @@ public class ProcessoDTOOutput implements Serializable {
 	public ProcessoDTOOutput() {
 	}
 
+	public ProcessoDTOOutput(Long id, Long nuProcesso, String sgOrgaoSetor, String nuAno, String chaveProcesso,
+			String descricao, Assunto cdAssunto, Interessado cdInteressado) {
+		this.id = id;
+		this.nuProcesso = nuProcesso;
+		this.sgOrgaoSetor = sgOrgaoSetor;
+		this.nuAno = nuAno;
+		this.chaveProcesso = chaveProcesso;
+		this.descricao = descricao;
+		this.cdAssunto = cdAssunto;
+		this.cdInteressado = cdInteressado;
+	}
+
 	public Long getId() {
 		return id;
 	}

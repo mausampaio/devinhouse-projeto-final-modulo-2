@@ -25,12 +25,10 @@ public class InteressadoService {
 		interessado.setNuIdentificacao(interessado.getNuIdentificacao().replaceAll("([^\\d])", ""));
 
 		Optional<Interessado> result = repository.findByNuIdentificacao(interessado.getNuIdentificacao());
-
-		result.ifPresent(i -> {
-			if (!i.equals(interessado)) {
-				throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
-			}
-		});
+		
+		if (result.isPresent()) {
+			throw new NuIdentificacaoJaExistenteException("CPF informado já cadastrado");
+		}
 
 		return repository.save(interessado);
 	}

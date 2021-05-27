@@ -34,9 +34,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-//	void deveRetornarTodosOsProcessosPorChaveProcesso() {
-	void testFindAllByChaveProcesso() {
-
+	void deveRetornarTodosOsProcessosPorChaveProcesso() {
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
@@ -45,10 +43,10 @@ class ProcessoRepositoryTest {
 		Assunto novoAssunto = repositoryTestAssunto.save(assunto);
 
 		Processo processo = new Processo("soft", "2021", "implementar", novoAssunto, novoInteressado);
-		repositoryTestProcesso.save(processo);
+		Processo novoProcesso = repositoryTestProcesso.save(processo);
 
 		// when
-		List<Processo> processos = repositoryTestProcesso.findAllByChaveProcesso("soft 1/2021");
+		List<Processo> processos = repositoryTestProcesso.findAllByChaveProcesso(novoProcesso.getChaveProcesso());
 
 		// then
 		assertThat(processos).asList().size().isEqualTo(1);

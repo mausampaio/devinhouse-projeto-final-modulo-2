@@ -28,24 +28,12 @@ public class Validacao implements Serializable {
 		return data;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
-
 	public String getMensagem() {
 		return mensagem;
 	}
 
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
-	}
-
 	public Integer getStatusCode() {
 		return statusCode;
-	}
-
-	public void setStatusCode(Integer statusCode) {
-		this.statusCode = statusCode;
 	}
 
 	public List<Campo> getCampos() {
@@ -69,16 +57,8 @@ public class Validacao implements Serializable {
 			return nome;
 		}
 
-		public void setNome(String nome) {
-			this.nome = nome;
-		}
-
 		public String getMensagem() {
 			return mensagem;
-		}
-
-		public void setMensagem(String mensagem) {
-			this.mensagem = mensagem;
 		}
 
 	}
