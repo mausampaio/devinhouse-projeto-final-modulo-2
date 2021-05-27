@@ -25,7 +25,6 @@ public class InteressadoDTOInput implements Serializable {
 	@NotNull
 	private String dtNascimento;
 	
-	@Size(min = 1, max = 1)
 	private char flAtivo = 's';
 	
 	public InteressadoDTOInput() {

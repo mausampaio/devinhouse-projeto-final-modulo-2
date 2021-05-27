@@ -38,7 +38,7 @@ public class InteressadoController {
 
 	@PostMapping(produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ResponseStatus(code = HttpStatus.OK)
+	@ResponseStatus(code = HttpStatus.CREATED)
 	public InteressadoDTOOutput create(@Valid @RequestBody InteressadoDTOInput interessadoDTO) {
 		Interessado interessado = service.create(interessadoMapper.toInteressado(interessadoDTO));
 
@@ -65,14 +65,14 @@ public class InteressadoController {
 
 	@PutMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ResponseStatus(code = HttpStatus.OK)
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void update(@PathVariable Long id, @RequestBody InteressadoDTOInput interessadoDTO) {
 		service.update(id, interessadoMapper.toInteressado(interessadoDTO));
 	}
 
 	@DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
 	@ResponseBody
-	@ResponseStatus(code = HttpStatus.OK)
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 		service.delete(id);
 	}
