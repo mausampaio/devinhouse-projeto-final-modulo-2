@@ -50,7 +50,7 @@ class AssuntoMapperTest {
 	}
 
 	@Test
-	void deveMapearUmaListaAssuntoDtoParaAssunto() {
+	void deveMapearUmaListaAssuntoDtoParaListaAssunto() {
 		// given
 		List<Assunto> assuntos = new ArrayList<Assunto>();
 		Assunto assunto = new Assunto("descricao");

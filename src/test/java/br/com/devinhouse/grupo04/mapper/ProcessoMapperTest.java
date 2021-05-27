@@ -31,7 +31,7 @@ class ProcessoMapperTest {
 	private InteressadoService interessadoService;
 
 	@Test
-	void testToProcesso() {
+	void deveMapearUmProcessoDtoParaProcesso() {
 		// given
 		Interessado interessado = new Interessado("Mauricio", "12834714002", LocalDate.of(1988, 8, 3));
 		interessado.setId(1L);
@@ -58,7 +58,7 @@ class ProcessoMapperTest {
 	}
 
 	@Test
-	void testToDtoProcesso() {
+	void deveMapearUmProcessoParaProcessoDto() {
 		// given
 		Interessado interessado = new Interessado("Mauricio", "12834714003", LocalDate.of(1988, 8, 3));
 		interessado.setId(1L);
@@ -79,7 +79,7 @@ class ProcessoMapperTest {
 	}
 
 	@Test
-	void testToDtoListOfProcesso() {
+	void ddeveMapearUmaListaProcessoDtoParaListaProcesso() {
 		// given
 		Interessado interessado = new Interessado("Mauricio", "12834714004", LocalDate.of(1988, 8, 3));
 		interessado.setId(1L);

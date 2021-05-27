@@ -29,7 +29,7 @@ class AssuntoServiceTest {
 	private AssuntoService assuntoService;
 
 	@Test
-	void DeveRetornarTodosOsAssuntos() {
+	void deveRetornarTodosOsAssuntos() {
 		// when
 		assuntoService.findAll();
 		// then
@@ -37,7 +37,7 @@ class AssuntoServiceTest {
 	}
 
 	@Test
-	void DeveRetornarAssuntoBaseadoNoId() {
+	void deveRetornarAssuntoBaseadoNoId() {
 		// given
 		Assunto assunto = new Assunto("descrição");
 		assunto.setId(1L);
@@ -51,13 +51,13 @@ class AssuntoServiceTest {
 	}
 
 	@Test()
-	void DeveRetornarExceptionCasoNaoEncontreOId() {
+	void deveRetornarExceptionCasoNaoEncontreOId() {
 
 		assertThatThrownBy(() -> assuntoService.find(1L)).isInstanceOf(AssuntoNotFoundException.class);
 	}
 
 	@Test()
-	void DeveRetornarNullCasoNaoSejaPassadoOId() {
+	void deveRetornarNullCasoNaoSejaPassadoOId() {
 		
 		// when
 		Assunto serviceAssunto = assuntoService.find(null);
@@ -67,7 +67,7 @@ class AssuntoServiceTest {
 	}
 
 	@Test
-	void DeveCriarUmAssunto() {
+	void deveCriarUmAssunto() {
 		// given
 		Assunto assunto = new Assunto("descrição"); 
 		assunto.setId(1L);
@@ -86,7 +86,7 @@ class AssuntoServiceTest {
 	}
 
 	@Test
-	void DeveAtualizarUmAssunto() {
+	void deveAtualizarUmAssunto() {
 		// given
 		Assunto assunto = new Assunto("descrição");
 		assunto.setId(1L); 
@@ -108,7 +108,7 @@ class AssuntoServiceTest {
 	}
 
 	@Test()
-	void DeveRetornarExceptionCasoFlAtivoSejaDiferenteDeSOuN() {
+	void deveRetornarExceptionCasoFlAtivoSejaDiferenteDeSOuN() {
 		Assunto assunto = new Assunto("cool descrption");
 		assunto.setId(1L);
 		assunto.setFlAtivo('V');
@@ -117,7 +117,7 @@ class AssuntoServiceTest {
 	}
 
 	@Test
-	void DeveExcluirUmAssuntoPorId() {
+	void deveExcluirUmAssuntoPorId() {
 		// when
 		assuntoService.delete(1L);
 		// then

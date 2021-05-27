@@ -53,7 +53,7 @@ class InteressadoMapperTest {
 	}
 
 	@Test
-	void testToDtoListOfInteressado() {
+	void deveMapearUmaListaInteressadoDtoParaListaInteressado() {
 		// given
 		List<Interessado> interessados = new ArrayList<Interessado>();
 		Interessado interessado = new Interessado("Mauricio", "12834714002", LocalDate.of(1988, 8, 3));

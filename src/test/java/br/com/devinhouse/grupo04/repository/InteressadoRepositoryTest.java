@@ -24,7 +24,7 @@ class InteressadoRepositoryTest {
 	}
 
 	@Test
-	void testFindAllByNuIdentificacao() {
+	void deveRetornarListaInteressadoPorCpf() {
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 
@@ -38,7 +38,7 @@ class InteressadoRepositoryTest {
 	}
 
 	@Test
-	void testFindByNuIdentificacao() {
+	void deveRetornarInteressadoPorCpf() {
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 

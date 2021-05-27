@@ -34,7 +34,9 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
+//	void deveRetornarTodosOsProcessosPorChaveProcesso() {
 	void testFindAllByChaveProcesso() {
+
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
@@ -53,7 +55,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-	void testFindAllByCdInteressadoIdAndCdAssuntoId() {
+	void deveRetornarTodosOsProcessosPorCdInteressadoECdAssunto() {
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
@@ -72,7 +74,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-	void testFindAllByCdAssuntoId() {
+	void deveRetornarTodosOsProcessosPorCdAssunto() {
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
@@ -91,7 +93,7 @@ class ProcessoRepositoryTest {
 	}
 
 	@Test
-	void testFindAllByCdInteressadoId() {
+	void deveRetornarTodosOsProcessosPorCdInteressado() {
 		// given
 		Interessado interessado = new Interessado("Emanuelle", "18272985020", LocalDate.of(1992, 2, 1));
 		Interessado novoInteressado = repositoryTestInteressado.save(interessado);
